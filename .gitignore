@@ -15,7 +15,7 @@
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
-[Rr]elease/
+#[Rr]elease/
 [Rr]eleases/
 x64/
 x86/
@@ -72,6 +72,8 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
+*.iobj
+*.ipdb
 
 # Chutzpah Test files
 _Chutzpah*
@@ -286,3 +288,4 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/CryptocurrencyInvestmentTracker/CryptocurrencyInvestmentTracker/Release/Cryptocu.BFC1E13C.tlog

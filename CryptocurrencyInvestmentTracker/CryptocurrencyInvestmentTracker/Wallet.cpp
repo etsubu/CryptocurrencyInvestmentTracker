@@ -52,6 +52,7 @@ bool Wallet::loadWallet() {
 			myfile.close();
 			return false;
 		}
+		std::replace(line.begin(), line.end(), ',', '.');
 		char currencySign = line[line.size() - 1];
 		if (currencySign == '$')
 			baseCurrency = USD;

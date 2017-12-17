@@ -148,6 +148,7 @@
   <ItemGroup>
     <ClInclude Include="json.hpp" />
     <ClInclude Include="PriceQuery.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Wallet.h" />
@@ -162,6 +163,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Wallet.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CryptocurrencyInvestmentTracker.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="btc.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

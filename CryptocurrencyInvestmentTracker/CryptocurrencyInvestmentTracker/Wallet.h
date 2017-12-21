@@ -32,9 +32,11 @@ private:
 	void calculateWalletValue();
 	std::vector<CurrencyWallet*> currenciesOwned;
 	double walletValue;
+	double walletValueInBTC;
 	double walletBaseValue;
 	double percent;
 	std::string walletFile;
 	PriceQuery query;
 	BaseCurrency baseCurrency;
+	char baseCurrencySign;
 };

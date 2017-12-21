@@ -32,8 +32,10 @@ void Wallet::clearWallet() {
 */
 void Wallet::calculateWalletValue() {
 	this->walletValue = 0;
+	this->walletValueInBTC = 0;
 	for (auto currency : this->currenciesOwned) {
 		this->walletValue += currency->amountOwned * currency->currency.price[this->baseCurrency];
+		this->walletValueInBTC += currency->amountOwned * currency->currency.price[BTC];
 	}
 	this->percent = ((this->walletValue - this->walletBaseValue) / this->walletBaseValue) * 100;
 }
@@ -53,15 +55,15 @@ bool Wallet::loadWallet() {
 			return false;
 		}
 		std::replace(line.begin(), line.end(), ',', '.');
-		char currencySign = line[line.size() - 1];
-		if (currencySign == '$')
-			baseCurrency = USD;
-		else if (currencySign == 'e')
-			baseCurrency = EUR;
-		else if (currencySign == 'B')
-			baseCurrency = BTC;
+		this->baseCurrencySign = line[line.size() - 1];
+		if (baseCurrencySign == '$')
+			baseCurrency = BaseCurrency::USD;
+		else if (baseCurrencySign == 'e')
+			baseCurrency = BaseCurrency::EUR;
+		else if (baseCurrencySign == 'B')
+			baseCurrency = BaseCurrency::BTC;
 		else {
-			std::cout << "Unknow base currency: " << currencySign << std::endl;
+			std::cout << "Unknow base currency: " << baseCurrencySign << std::endl;
 			myfile.close();
 			return false;
 		}
@@ -172,10 +174,10 @@ std::ostream& operator<<(std::ostream& os, const Wallet& wallet)
 		return os;
 	}
 	for (auto currencyWallet : wallet.currenciesOwned) {
-		os << "Name: " << currencyWallet->currency.name << "\nBTC price: " << currencyWallet->currency.price[BTC]
-			<< "\nUSD price: " << currencyWallet->currency.price[USD] << "\nEUR price: " << currencyWallet->currency.price[EUR]
+		os << "Name: " << currencyWallet->currency.name << "\nBTC price: " << currencyWallet->currency.price[BaseCurrency::BTC]
+			<< "\nUSD price: " << currencyWallet->currency.price[BaseCurrency::USD] << "\nEUR price: " << currencyWallet->currency.price[BaseCurrency::EUR]
 			<< "\nChange in 24h: " << currencyWallet->currency.changePercentInDay << "%\n------------\n";
 	}
-	os << "Total base value: " << wallet.walletBaseValue << "\nTotal current value: " << wallet.walletValue << "\nTotal change: " << wallet.walletValue - wallet.walletBaseValue << "\nTotal change percent: " << wallet.percent << "%\n";
+	os << "Base value: \t" << wallet.walletBaseValue << " " << wallet.baseCurrencySign << "\nCurrent value: \t" << wallet.walletValue << " " << wallet.baseCurrencySign << "\nValue in BTC: \t" << wallet.walletValueInBTC << " B\nChange: \t" << wallet.walletValue - wallet.walletBaseValue << " " << wallet.baseCurrencySign << "\nChange percent: " << wallet.percent << " %\n";
 	return os;
 }
